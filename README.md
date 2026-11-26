@@ -92,4 +92,4 @@ The tool is available from the **Plugins** menu, its toolbar icon, and the **Pro
 
 ## License
 
-GPL-2.0-or-later.
+GPL-2.0-or-later. See [LICENSE](LICENSE).
