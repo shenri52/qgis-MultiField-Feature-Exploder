@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from qgis.PyQt.QtCore import QCoreApplication, QMetaType, QVariant
+from qgis.PyQt.QtCore import QMetaType, QVariant
 from qgis.core import (
     NULL,
     QgsProcessing,
@@ -15,6 +15,7 @@ from qgis.core import (
 )
 
 from .. import core
+from ..i18n import tr
 
 
 class MultiFieldFeatureExploderAlgorithm(QgsProcessingAlgorithm):
@@ -23,9 +24,6 @@ class MultiFieldFeatureExploderAlgorithm(QgsProcessingAlgorithm):
     OUTPUT_FIELD = "OUTPUT_FIELD"
     OUTPUT = "OUTPUT"
 
-    def tr(self, text):
-        return QCoreApplication.translate("MultiFieldFeatureExploder", text)
-
     def createInstance(self):
         return MultiFieldFeatureExploderAlgorithm()
 
@@ -33,16 +31,16 @@ class MultiFieldFeatureExploderAlgorithm(QgsProcessingAlgorithm):
         return "explode_features_by_multiple_fields"
 
     def displayName(self):
-        return self.tr("Explode features by multiple fields")
+        return tr("Explode features by multiple fields")
 
     def group(self):
-        return "MultiField Feature Exploder"
+        return tr("MultiField Feature Exploder")
 
     def groupId(self):
         return "multifield_feature_exploder"
 
     def shortHelpString(self):
-        return self.tr(
+        return tr(
             "Creates one output feature for each non-empty value found in the "
             "selected fields. The source geometry and all non-selected attributes "
             "are copied unchanged. The selected fields are replaced by one text "
@@ -54,51 +52,51 @@ class MultiFieldFeatureExploderAlgorithm(QgsProcessingAlgorithm):
     def initAlgorithm(self, config=None):
         self.addParameter(QgsProcessingParameterFeatureSource(
             self.INPUT,
-            self.tr("Input layer"),
+            tr("Input layer"),
             [QgsProcessing.TypeVectorAnyGeometry],
         ))
         self.addParameter(QgsProcessingParameterField(
             self.FIELDS,
-            self.tr("Fields containing the memberships to explode"),
+            tr("Fields containing the memberships to explode"),
             parentLayerParameterName=self.INPUT,
             allowMultiple=True,
         ))
         self.addParameter(QgsProcessingParameterString(
             self.OUTPUT_FIELD,
-            self.tr("Name of the output field"),
+            tr("Name of the output field"),
             defaultValue="membership",
         ))
         self.addParameter(QgsProcessingParameterFeatureSink(
             self.OUTPUT,
-            self.tr("Exploded features"),
+            tr("Exploded features"),
         ))
 
     def processAlgorithm(self, parameters, context, feedback):
         source = self.parameterAsSource(parameters, self.INPUT, context)
         if source is None:
-            raise QgsProcessingException(self.tr("Please select a valid input layer."))
+            raise QgsProcessingException(tr("Please select a valid input layer."))
 
         selected_fields = self.parameterAsFields(parameters, self.FIELDS, context)
         if not selected_fields:
-            raise QgsProcessingException(self.tr("Select at least one field to explode."))
+            raise QgsProcessingException(tr("Select at least one field to explode."))
 
         output_field = self.parameterAsString(
             parameters, self.OUTPUT_FIELD, context
         ).strip()
         if not output_field:
-            raise QgsProcessingException(self.tr("Enter a name for the output field."))
+            raise QgsProcessingException(tr("Enter a name for the output field."))
 
         source_fields = source.fields()
         source_names = {source_fields.at(i).name()
                         for i in range(source_fields.count())}
         if any(name not in source_names for name in selected_fields):
-            raise QgsProcessingException(self.tr("One or more selected fields do not exist."))
+            raise QgsProcessingException(tr("One or more selected fields do not exist."))
 
         retained_indexes = core.retained_field_indexes(source_fields, selected_fields)
         retained_names = {source_fields.at(index).name()
                           for index in retained_indexes}
         if output_field in retained_names:
-            raise QgsProcessingException(self.tr(
+            raise QgsProcessingException(tr(
                 "The output field already exists among the fields that will be kept. "
                 "Choose another name."
             ))
@@ -123,7 +121,7 @@ class MultiFieldFeatureExploderAlgorithm(QgsProcessingAlgorithm):
             source.sourceCrs(),
         )
         if sink is None:
-            raise QgsProcessingException(self.tr("Could not create the output layer."))
+            raise QgsProcessingException(tr("Could not create the output layer."))
 
         total = source.featureCount()
         for feature_index, source_feature in enumerate(source.getFeatures()):
@@ -141,13 +139,13 @@ class MultiFieldFeatureExploderAlgorithm(QgsProcessingAlgorithm):
                 output_feature.setAttributes(output_attributes + [value])
                 if not sink.addFeature(output_feature):
                     raise QgsProcessingException(
-                        self.tr("Could not write an exploded feature to the output layer.")
+                        tr("Could not write an exploded feature to the output layer.")
                     )
 
             if total:
                 feedback.setProgress(int((feature_index + 1) * 100 / total))
 
-        feedback.pushInfo(self.tr(
+        feedback.pushInfo(tr(
             "Exploded {0} selected field(s) into the output field '{1}'."
         ).format(len(selected_fields), output_field))
         return {self.OUTPUT: destination_id}
