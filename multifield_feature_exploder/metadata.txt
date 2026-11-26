@@ -15,6 +15,7 @@ repository=https://github.com/shenri52/qgis-MultiField-Feature-Exploder
 homepage=https://github.com/shenri52/qgis-MultiField-Feature-Exploder
 tags=vector, fields, explode, duplicate, geometry, processing, membership
 icon=icon.svg
+license=GPL-2.0-or-later
 experimental=False
 deprecated=False
 category=Vector
