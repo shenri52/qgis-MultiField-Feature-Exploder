@@ -1,7 +1,7 @@
 # MultiField Feature Exploder
 
 [![QGIS](https://img.shields.io/badge/QGIS-3.28%2B-green)](https://qgis.org/)
-[![Version](https://img.shields.io/badge/version-0.1.0-blue)](https://github.com/shenri52/qgis-MultiField-Feature-Exploder/releases)
+[![Version](https://img.shields.io/badge/version-0.1.1-blue)](https://github.com/shenri52/qgis-MultiField-Feature-Exploder/releases)
 
 ## Français
 
@@ -59,6 +59,7 @@ Le workflow GitHub Actions construit et joint automatiquement l'archive à chaqu
 
 ### Historique des versions
 
+- **0.1.1** – Adaptation de l'interface à la langue du système : les libellés du menu, de la barre d'outils et de l'algorithme de traitement sont affichés en français lorsque le système est en français. L'anglais reste utilisé pour les autres langues. Aucune modification du traitement des données.
 - **0.1.0** – Première version. Création de l'algorithme de traitement qui génère une entité par valeur renseignée dans les champs sélectionnés, en conservant la géométrie complète de l'entité source. Ajout de l'accès depuis le menu Extensions, la barre d'outils et la boîte à outils Traitements. Prise en charge du modeleur graphique et des traitements par lots.
 
 ## English
@@ -104,6 +105,7 @@ The GitHub Actions workflow builds and attaches the archive to every published R
 
 ### Version history
 
+- **0.1.1** – Localized the interface according to the system language: menu, toolbar and Processing algorithm labels are displayed in French on French systems. English remains the default for other languages. No change to data processing behavior.
 - **0.1.0** – Initial release. Added the Processing algorithm that creates one feature for each populated value in the selected fields while preserving the complete source geometry. Added access from the Plugins menu, toolbar and Processing toolbox. Supports the graphical modeler and batch processing.
 
 ## License
