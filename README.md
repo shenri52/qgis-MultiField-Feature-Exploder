@@ -9,12 +9,6 @@
 
 Il s'agit d'une **duplication de géométrie complète**, et non d'un découpage spatial : un polygone communal est reproduit pour chaque organisme auquel la commune appartient.
 
-### Historique du projet
-
-Cet outil est né d'un **script personnel de shenri52**, créé pour répondre à un besoin de traitement de données géographiques qui ne trouvait pas de solution adaptée parmi les extensions QGIS disponibles. Le script a ensuite été structuré et intégré dans une extension QGIS afin de rendre le traitement plus facile à lancer et à réutiliser depuis l'environnement natif de QGIS.
-
-Le principe fonctionnel d'origine est conservé : pour chaque entité source, chaque valeur renseignée dans les champs d'appartenance sélectionnés génère une copie de l'entité avec sa géométrie complète et la valeur correspondante. Le projet est maintenu par son auteur, **shenri52**.
-
 ### Exemple avec des données fictives
 
 **Source**
@@ -65,19 +59,13 @@ Le workflow GitHub Actions construit et joint automatiquement l'archive à chaqu
 
 ### Historique des versions
 
-Consultez le fichier [CHANGELOG.md](CHANGELOG.md) pour le détail des évolutions.
+- **0.1.0** – Première version. Création de l'algorithme de traitement qui génère une entité par valeur renseignée dans les champs sélectionnés, en conservant la géométrie complète de l'entité source. Ajout de l'accès depuis le menu Extensions, la barre d'outils et la boîte à outils Traitements. Prise en charge du modeleur graphique et des traitements par lots.
 
 ## English
 
 **MultiField Feature Exploder** transforms several membership columns into separate geographic features. Each non-empty value found in the selected fields creates one output feature with exactly the same geometry as its source feature.
 
 This is **whole-geometry duplication**, not a spatial split: a municipality polygon is copied once for every organization it belongs to.
-
-### Project history
-
-The tool started as a **personal script written by shenri52** to address a geographic data-processing need for which no suitable QGIS plugin had been found. The script was then organized as a QGIS plugin so the operation could be launched and reused more easily from within QGIS.
-
-The original behavior remains unchanged: each populated value in the selected membership fields creates a copy of the source feature, retaining its complete geometry and the corresponding membership value. The project is maintained by its author, **shenri52**.
 
 ### Example with fictional data
 
@@ -106,9 +94,17 @@ Each output row keeps the original municipality geometry unchanged. Selected sou
 
 The tool is available from the **Plugins** menu, its toolbar icon, and the **Processing** toolbox. The menu action opens the native Processing algorithm dialog. The algorithm supports the graphical modeler and batch processing.
 
+### Installation
+
+1. Download `multifield_feature_exploder.zip` from the [Releases page](https://github.com/shenri52/qgis-MultiField-Feature-Exploder/releases).
+2. In QGIS, open **Plugins → Manage and Install Plugins → Install from ZIP**.
+3. Select the downloaded archive.
+
+The GitHub Actions workflow builds and attaches the archive to every published Release. It does not publish the plugin directly to the official QGIS plugin repository; that upload remains a separate step.
+
 ### Version history
 
-See [CHANGELOG.md](CHANGELOG.md) for release notes.
+- **0.1.0** – Initial release. Added the Processing algorithm that creates one feature for each populated value in the selected fields while preserving the complete source geometry. Added access from the Plugins menu, toolbar and Processing toolbox. Supports the graphical modeler and batch processing.
 
 ## License
 
